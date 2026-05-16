@@ -825,6 +825,7 @@ ul { padding: 0; margin: 0; list-style: none; }
   display: grid;
   grid-template-columns: 1fr 1.2fr;
   gap: 40px;
+  margin-top: 40px;
 }
 @media (max-width: 900px) { .contact-grid { grid-template-columns: 1fr; } }
 .contact-info { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
