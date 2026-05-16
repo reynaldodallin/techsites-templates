@@ -1,0 +1,44 @@
+name: Deploy Templates to Cloudflare Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - niche: coach-consultant
+            project: ts-coach-consultant
+          - niche: dentist-medical
+            project: ts-dentist-medical
+          - niche: ecom-single-product
+            project: ts-ecom-single-product
+          - niche: fitness-wellness
+            project: ts-fitness-wellness
+          - niche: lawyer-accountant
+            project: ts-lawyer-accountant
+          - niche: marketing-agency
+            project: ts-marketing-agency
+          - niche: portfolio-freelancer
+            project: ts-portfolio-freelancer
+          - niche: real-estate-model
+            project: ts-real-estate-model
+          - niche: restaurant-cafe
+            project: ts-restaurant-cafe
+          - niche: saas-tech
+            project: ts-saas-tech
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Deploy ${{ matrix.niche }} → ${{ matrix.project }}
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CF_API_TOKEN }}
+          accountId: ${{ secrets.CF_ACCOUNT_ID }}
+          command: pages deploy ${{ matrix.niche }} --project-name=${{ matrix.project }} --commit-dirty=true
